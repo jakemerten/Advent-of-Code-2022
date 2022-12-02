@@ -40,6 +40,72 @@
 ;; TODO: tests, cli handling
 
 
+;; DAY 2
+;; puzzle 3
+(defn input-load
+  [file-path]
+  (->> file-path
+       io/resource
+       slurp))
+
+(def input2
+  (->> (input-load "input2.txt")
+       clojure.string/split-lines
+       (partition 1)))
+
+;; a and x = rock 1 POINT
+;; b and y = paper 2 POINTS
+;; c and z = scissors 3 POINTS
+;; win = 6 points
+;; draw = 3 points
+;; loss = 0 points
+
+(defn score-hand
+  [input]
+  (let [opp (str (first input))
+        you (str (last input))]
+    (case opp
+      "A" (case you
+            "X" 4
+            "Y" 8
+            "Z" 3)
+      "B" (case you
+            "X" 1
+            "Y" 5
+            "Z" 9)
+      "C" (case you
+            "X" 7
+            "Y" 2
+            "Z" 6)
+      :else "todo: log error")))
+
+(reduce +
+        (map #(score-hand (first %)) input2))
+
+;; puzzle 4
+
+;; x = lose, y = draw, z = win
+(defn re-score-hand
+  [input]
+  (let [opp (str (first input))
+        you (str (last input))]
+    (case opp
+      "A" (case you
+            "X" 3
+            "Y" 4
+            "Z" 8)
+      "B" (case you
+            "X" 1
+            "Y" 5
+            "Z" 9)
+      "C" (case you
+            "X" 2
+            "Y" 6
+            "Z" 7)
+      :else "todo: log error")))
+
+(reduce +
+        (map #(re-score-hand (first %)) input2))
 
 (defn -main
   "I don't do a whole lot ... yet."
