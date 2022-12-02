@@ -29,8 +29,7 @@ GAME_SCORE = {
 
 print(f'Part A: {sum([GAME_SCORE.get(game, 0) for game in GAMES])}')
 
-# Part B changes the values of A, B, C, X, Y, Z
-# Second Column X = end with a loss; Y = end with a draw; Z = end with a win
+# Part B changes the values of X, Y, Z
 # ROCK = A
 # PAPER = B
 # SCISSORS = C
