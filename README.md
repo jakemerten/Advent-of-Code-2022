@@ -1,3 +1,3 @@
-# Advent-of-Code-2022
+# Advent of Code 2022
 
-A collaborative area to share solutions to the Advent of Code 2022 challenge!
+Come one, come all to a collaborative area to share solutions to the Advent of Code 2022 challenge!
