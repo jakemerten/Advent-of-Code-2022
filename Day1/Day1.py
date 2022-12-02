@@ -2,7 +2,7 @@
 # Designate file as read only
 # Each new line comes out as a new integer
 
-with open('inputday1.txt', 'r') as infile:
+with open('input_Day1.txt', 'r') as infile:
     elves = [[int(c) for c in x.split("\n")] for x in infile.read()[:-1].split("\n\n")]
 
 # Print the elf with the highest amount of calories being carried (max sum)
