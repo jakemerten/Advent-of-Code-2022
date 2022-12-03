@@ -28,3 +28,21 @@ GAME_SCORE = {
 }
 
 print(f'Part A: {sum([GAME_SCORE.get(game, 0) for game in GAMES])}')
+
+# X = You must lose this hand
+# Y = You must draw this hand
+# Z = You must win this hand
+
+GAME_SCORE = {
+    'A X': LOSE + SCISSORS,
+    'A Y': DRAW + ROCK,
+    'A Z': WIN + PAPER,
+    'B X': LOSE + ROCK,
+    'B Y': DRAW + PAPER,
+    'B Z': WIN + SCISSORS,
+    'C X': LOSE + PAPER,
+    'C Y': DRAW + SCISSORS,
+    'C Z': WIN + ROCK,
+}
+
+print(f'Part B: {sum([GAME_SCORE.get(game, 0) for game in GAMES])}')
