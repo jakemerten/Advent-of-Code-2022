@@ -2,8 +2,7 @@
   [:require [clojure.java.io :as io]])
 
 
-;; DAY 1
-;; puzzle 1
+;; puzzle 1a
 (def input1
   (->>  "input1.txt"
         (io/resource)
@@ -21,7 +20,7 @@
 
 (apply max (partition-reduce-add input1))
 
-;; puzzle 2
+;; puzzle 1b
 (defn remove-max
   [coll]
   (let [max-val (apply max coll)]
@@ -40,8 +39,7 @@
 ;; TODO: tests, cli handling
 
 
-;; DAY 2
-;; puzzle 3
+;; puzzle 2a
 (defn input-load
   [file-path]
   (->> file-path
@@ -82,8 +80,7 @@
 (reduce +
         (map #(score-hand (first %)) input2))
 
-;; puzzle 4
-
+;; puzzle 2b
 ;; x = lose, y = draw, z = win
 (defn re-score-hand
   [input]
@@ -106,6 +103,40 @@
 
 (reduce +
         (map #(re-score-hand (first %)) input2))
+
+;; puzzle 3a
+(def priorities
+  (apply hash-map (interleave (flatten (conj (map char (range (int \A) (inc (int \Z))))
+                                             (map char (range (int \a) (inc (int \z))))))
+                              (range 1 53))))
+
+(defn split-and-match
+  [input-string]
+  (let [split-list (split-at (/ (count input-string) 2) input-string)
+        first-half (first split-list)
+        second-half (last split-list)]
+    (first (flatten (for [item first-half]
+                      (filter #(= item %) second-half))))))
+
+(reduce + (map #(priorities (split-and-match %))
+               (clojure.string/split-lines (input-load "input3.txt"))))
+
+;; puzzle 3b
+(def elf-groups
+  (partition 3 (clojure.string/split-lines (input-load "input3.txt"))))
+
+(defn match-two
+  [elf-group]
+  (let [first-elf (first elf-group)
+        second-elf (second elf-group)
+        third-elf (last elf-group)
+        first-match (flatten (for [item first-elf]
+                               (filter #(= item %) second-elf)))]
+    (first (flatten (for [item first-match]
+                      (filter #(= item %) third-elf))))))
+
+(reduce + (map #(priorities (match-two % ))
+               elf-groups))
 
 (defn -main
   "I don't do a whole lot ... yet."
