@@ -138,6 +138,43 @@
 (reduce + (map #(priorities (match-two % ))
                elf-groups))
 
+;; puzzle 4a
+(def elf-pairs
+  (->> (clojure.string/split-lines (input-load "input4.txt"))
+       (map #(clojure.string/split % #","))
+       flatten
+       (map #(clojure.string/split % #"-"))
+       flatten
+       (partition 4)))
+
+(defn fully-contains?
+  [elf-pair]
+  (let [elf-one {:start (Integer/parseInt (first elf-pair))
+                  :end (Integer/parseInt (second elf-pair))}
+        elf-two {:start (Integer/parseInt (nth elf-pair 2))
+                  :end (Integer/parseInt (last elf-pair)) }]
+    (or (and (<= (:start elf-one) (:start elf-two))
+             (>= (:end elf-one) (:end elf-two)))
+        (and (<= (:start elf-two) (:start elf-one))
+             (>= (:end elf-two) (:end elf-one))))))
+
+(count (filter true? (map fully-contains? elf-pairs)))
+
+;; puzzle 4b
+
+(defn pair-overlap?
+  [elf-pair]
+  (let [elf-one {:start (Integer/parseInt (first elf-pair))
+                 :end (Integer/parseInt (second elf-pair))}
+        elf-two {:start (Integer/parseInt (nth elf-pair 2))
+                 :end (Integer/parseInt (last elf-pair)) }]
+    (or (and (>= (:start elf-two) (:start elf-one))
+             (<= (:start elf-two) (:end elf-one)))
+        (and (>= (:start elf-one) (:start elf-two))
+             (<= (:start elf-one) (:end elf-two))))))
+
+(count (filter true? (map pair-overlap? elf-pairs)))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
